@@ -186,7 +186,7 @@ class journal extends React.Component {
           var arr = []
           var arrs = []
           for (var i in this.state.oneMonthOnLineRate) {
-            arr.push(parseInt(this.state.oneMonthOnLineRate[i].rate) )
+            arr.push(parseFloat(this.state.oneMonthOnLineRate[i].rate) )
             arrs.push(this.state.oneMonthOnLineRate[i].gmtcreate)
           }
           console.log(arr)
