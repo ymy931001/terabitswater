@@ -281,7 +281,7 @@ class journal extends React.Component {
                 <span>水表管理平台</span>
               </Menu.Item>
               <Menu.Item key="1" >
-                                    <Icon type="home" />
+                    <Icon type="home" />
                     <span>
                       <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
                     </span>
