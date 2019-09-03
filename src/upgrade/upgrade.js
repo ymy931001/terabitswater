@@ -238,7 +238,7 @@ class journal extends React.Component {
       ]).then(res => {
         if (res.data && res.data.message === 'success') {
           for (var i = 0; i < res.data.data.length; i++) {
-            res.data.data[i].key = res.data.data[i].id
+            res.data.data[i].key = res.data.data[i].wirelessNum
           }
           console.log(res.data.data)
           this.setState({
@@ -262,7 +262,7 @@ class journal extends React.Component {
       ]).then(res => {
         if (res.data && res.data.message === 'success') {
           for (var i = 0; i < res.data.data.length; i++) {
-            res.data.data[i].key = res.data.data[i].id
+            res.data.data[i].key = res.data.data[i].wirelessNum
           }
           this.setState({
             data: res.data.data,
@@ -331,7 +331,7 @@ class journal extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
         for (var i = 0; i < res.data.data.length; i++) {
-          res.data.data[i].key = res.data.data[i].id
+          res.data.data[i].key = res.data.data[i].wirelessNum
         }
         console.log(res.data.data)
         this.setState({
