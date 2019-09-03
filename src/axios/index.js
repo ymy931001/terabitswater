@@ -706,6 +706,13 @@ export const deleteheader = (params) => http.post(url + '/information/header/del
 });
 
 
+//15.3 仪表盘
+export const headerdataStatistics = (params) => http.get(url + '/information/header/dataStatistics', {
+	access_token: localStorage.getItem('access_token'),
+});
+
+
+
 
 // //10.3 设备升级
 // export const getReading = (params) => http.post(url + '/device/basic/getReading', {

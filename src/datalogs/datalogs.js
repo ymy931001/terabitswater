@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Menu, Layout, Button, Tabs, Input, Select, Table, DatePicker,LocaleProvider } from 'antd';
+import { Icon, Menu, Layout, Button, Tabs, Input, Select, Table, DatePicker, LocaleProvider } from 'antd';
 import { Link } from 'react-router-dom';
 import { devicelogs } from '../axios';
 import { createForm } from 'rc-form';
@@ -108,7 +108,7 @@ class journal extends React.Component {
     document.title = "设备日志";
 
 
-       var powerarr = [];
+    var powerarr = [];
     var powerarr1 = [];
     var powerarr2 = [];
     var powerarr3 = [];
@@ -119,7 +119,7 @@ class journal extends React.Component {
     var powerarr8 = [];
     var powerarr9 = [];
     for (var i = 0; i < this.state.powermenu.length; i++) {
-      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68 ) {
+      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68) {
         powerarr.push(this.state.powermenu[i])
       } else if (this.state.powermenu[i].id === 11 || this.state.powermenu[i].id === 12 || this.state.powermenu[i].id === 13 || this.state.powermenu[i].id === 63) {
         powerarr1.push(this.state.powermenu[i])
@@ -229,38 +229,41 @@ class journal extends React.Component {
                     <span>水表管理平台</span>
                   </Menu.Item>
                   <Menu.Item>
-                    <Icon type="home" /><span>仪表盘</span>
+                    <Icon type="home" />
+                    <span>
+                      <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
+                    </span>
                   </Menu.Item>
                   <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
-                  {powers}
-                </SubMenu>
-                <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
-                  {powers1}
-                </SubMenu>
-                <SubMenu key="sub3" title={<span><Icon type="user" /><span>用户管理</span></span>}>
-                  {powers2}
-                </SubMenu>
-                <SubMenu key="sub4" title={<span><Icon type="bar-chart" /><span>用水管理</span></span>}>
-                  {powers3}
-                </SubMenu>
-                <SubMenu key="sub5" title={<span><Icon type="tool" /><span>报警管理</span></span>}>
-                  {powers4}
-                </SubMenu>
-                <SubMenu key="sub6" title={<span><Icon type="calendar" /><span>日志管理</span></span>}>
-                  {powers5}
-                  <SubMenu key="sub7" title={<span>用户日志</span>}>
-                    {powers6}
+                    {powers}
                   </SubMenu>
-                </SubMenu>
-                <SubMenu key="sub8" title={<span><Icon type="sync" /><span>生命周期</span></span>}>
-                  {powers7}
-                </SubMenu>
-                <SubMenu key="sub9" title={<span><Icon type="warning" /><span>产品监控</span></span>}>
-                  <SubMenu key="sub10" title={<span>产品测试</span>}>
-                    {powers8}
+                  <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
+                    {powers1}
                   </SubMenu>
-                  {powers9}
-                </SubMenu>
+                  <SubMenu key="sub3" title={<span><Icon type="user" /><span>用户管理</span></span>}>
+                    {powers2}
+                  </SubMenu>
+                  <SubMenu key="sub4" title={<span><Icon type="bar-chart" /><span>用水管理</span></span>}>
+                    {powers3}
+                  </SubMenu>
+                  <SubMenu key="sub5" title={<span><Icon type="tool" /><span>报警管理</span></span>}>
+                    {powers4}
+                  </SubMenu>
+                  <SubMenu key="sub6" title={<span><Icon type="calendar" /><span>日志管理</span></span>}>
+                    {powers5}
+                    <SubMenu key="sub7" title={<span>用户日志</span>}>
+                      {powers6}
+                    </SubMenu>
+                  </SubMenu>
+                  <SubMenu key="sub8" title={<span><Icon type="sync" /><span>生命周期</span></span>}>
+                    {powers7}
+                  </SubMenu>
+                  <SubMenu key="sub9" title={<span><Icon type="warning" /><span>产品监控</span></span>}>
+                    <SubMenu key="sub10" title={<span>产品测试</span>}>
+                      {powers8}
+                    </SubMenu>
+                    {powers9}
+                  </SubMenu>
                 </Menu>
               </div>
             </Sider>

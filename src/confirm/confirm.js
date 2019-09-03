@@ -256,7 +256,10 @@ class journal extends React.Component {
                     <span>水表管理平台</span>
                   </Menu.Item>
                   <Menu.Item>
-                    <Icon type="home" /><span>仪表盘</span>
+                                        <Icon type="home" />
+                    <span>
+                      <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
+                    </span>
                   </Menu.Item>
                   <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
                     {powers}
