@@ -186,34 +186,70 @@ class journal extends React.Component {
           var arr = []
           var arrs = []
           for (var i in this.state.oneMonthOnLineRate) {
-            arr.push(parseFloat(this.state.oneMonthOnLineRate[i].rate) )
+            arr.push(parseFloat(this.state.oneMonthOnLineRate[i].rate))
             arrs.push(this.state.oneMonthOnLineRate[i].gmtcreate)
           }
           console.log(arr)
-          var chart1 = new Highcharts.Chart({
-            chart: {
-              renderTo: 'container1',
-              type: 'column'
-            },
+          console.log(arrs)
+          // var chart1 = new Highcharts.Chart({
+          //   chart: {
+          //     renderTo: 'container1',
+          //     type: 'column'
+          //   },
+          //   title: {
+          //     text: '设备近一个月在线率统计'
+          //   },
+          //   credits: {
+          //     enabled: false // 禁用版权信息
+          //   },
+          //   xAxis: {
+          //     categories: arrs,
+          //     crosshair: true,
+          //     type: 'datetime'
+          //   },
+          //   yAxis: {
+          //     title: {
+          //       text: '在线率/%'
+          //     }
+          //   },
+          //   series: [{
+          //     data:arr,
+          //   }]
+          // });
+
+          var chart = Highcharts.chart('container', {
             title: {
               text: '设备近一个月在线率统计'
-            },
-            credits: {
-              enabled: false // 禁用版权信息
-            },
-            xAxis: {
-              categories: arrs,
-              crosshair: true,
-              type: 'datetime'
             },
             yAxis: {
               title: {
                 text: '在线率/%'
               }
             },
+            xAxis: {
+              categories: arrs,
+              crosshair: true,
+              type: 'datetime'
+            },
+            credits: {
+              enabled: false // 禁用版权信息
+            },
+            // legend: {
+            //   layout: 'vertical',
+            //   align: 'right',
+            //   verticalAlign: 'middle'
+            // },
+            plotOptions: {
+              series: {
+                label: {
+                  connectorAllowed: false
+                },
+              }
+            },
             series: [{
-              data:arr,
-            }]
+              name: '在线率',
+              data: arr
+            }],
           });
         })
       }
@@ -281,41 +317,41 @@ class journal extends React.Component {
                 <span>水表管理平台</span>
               </Menu.Item>
               <Menu.Item key="1" >
-                    <Icon type="home" />
-                    <span>
-                      <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
-                    </span>
+                <Icon type="home" />
+                <span>
+                  <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
+                </span>
               </Menu.Item>
               <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
-                  {powers}
+                {powers}
+              </SubMenu>
+              <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
+                {powers1}
+              </SubMenu>
+              <SubMenu key="sub3" title={<span><Icon type="user" /><span>用户管理</span></span>}>
+                {powers2}
+              </SubMenu>
+              <SubMenu key="sub4" title={<span><Icon type="bar-chart" /><span>用水管理</span></span>}>
+                {powers3}
+              </SubMenu>
+              <SubMenu key="sub5" title={<span><Icon type="tool" /><span>报警管理</span></span>}>
+                {powers4}
+              </SubMenu>
+              <SubMenu key="sub6" title={<span><Icon type="calendar" /><span>日志管理</span></span>}>
+                {powers5}
+                <SubMenu key="sub7" title={<span>用户日志</span>}>
+                  {powers6}
                 </SubMenu>
-                <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
-                  {powers1}
+              </SubMenu>
+              <SubMenu key="sub8" title={<span><Icon type="sync" /><span>生命周期</span></span>}>
+                {powers7}
+              </SubMenu>
+              <SubMenu key="sub9" title={<span><Icon type="warning" /><span>产品监控</span></span>}>
+                <SubMenu key="sub10" title={<span>产品测试</span>}>
+                  {powers8}
                 </SubMenu>
-                <SubMenu key="sub3" title={<span><Icon type="user" /><span>用户管理</span></span>}>
-                  {powers2}
-                </SubMenu>
-                <SubMenu key="sub4" title={<span><Icon type="bar-chart" /><span>用水管理</span></span>}>
-                  {powers3}
-                </SubMenu>
-                <SubMenu key="sub5" title={<span><Icon type="tool" /><span>报警管理</span></span>}>
-                  {powers4}
-                </SubMenu>
-                <SubMenu key="sub6" title={<span><Icon type="calendar" /><span>日志管理</span></span>}>
-                  {powers5}
-                  <SubMenu key="sub7" title={<span>用户日志</span>}>
-                    {powers6}
-                  </SubMenu>
-                </SubMenu>
-                <SubMenu key="sub8" title={<span><Icon type="sync" /><span>生命周期</span></span>}>
-                  {powers7}
-                </SubMenu>
-                <SubMenu key="sub9" title={<span><Icon type="warning" /><span>产品监控</span></span>}>
-                  <SubMenu key="sub10" title={<span>产品测试</span>}>
-                    {powers8}
-                  </SubMenu>
-                  {powers9}
-                </SubMenu>
+                {powers9}
+              </SubMenu>
             </Menu>
           </Sider>
           <Layout>
@@ -364,7 +400,7 @@ class journal extends React.Component {
             ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
             onChange={this.timeonChange}
           />   */}
-                <div id="container1" style={{ height: '400px' }}></div>
+                <div id="container" style={{ height: '400px' }}></div>
                 {/* <Tabs type="card" onChange={this.tabchange} >
                   <TabPane tab="本日" key="1">
 

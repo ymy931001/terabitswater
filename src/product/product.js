@@ -222,7 +222,10 @@ class journal extends React.Component {
       dataIndex: 'transmission',
     }, {
       title: '产品标识',
-      dataIndex: '',
+      dataIndex: 'header',
+    }, {
+      title: '表头信息',
+      dataIndex: 'deviceheader',
     }, {
       title: '操作',
       dataIndex: 'id',

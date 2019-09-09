@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Button, Select, Table, Menu, Input, Layout, Row, Col, Popconfirm, Tabs, Cascader, message, Upload } from 'antd';
 import { Link } from 'react-router-dom';
 import { createForm } from 'rc-form';
-import { productadd } from '../axios';
+import { productadd, getheader } from '../axios';
 import './newadd.css';
 import Headers from '../header';
 
@@ -49,6 +49,7 @@ class newadd extends Component {
       texture: '',
       specification: '',
       turn: '',
+      headerlist: [],
     };
   }
 
@@ -56,7 +57,7 @@ class newadd extends Component {
     document.title = "新增设备";
 
 
- var powerarr = [];
+    var powerarr = [];
     var powerarr1 = [];
     var powerarr2 = [];
     var powerarr3 = [];
@@ -67,7 +68,7 @@ class newadd extends Component {
     var powerarr8 = [];
     var powerarr9 = [];
     for (var i = 0; i < this.state.powermenu.length; i++) {
-      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68 ) {
+      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68) {
         powerarr.push(this.state.powermenu[i])
       } else if (this.state.powermenu[i].id === 11 || this.state.powermenu[i].id === 12 || this.state.powermenu[i].id === 13 || this.state.powermenu[i].id === 63) {
         powerarr1.push(this.state.powermenu[i])
@@ -100,6 +101,26 @@ class newadd extends Component {
       data8: powerarr8,
       data9: powerarr9,
     });
+
+
+    getheader([
+
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+        var arr = []
+        for (var i in res.data.data) {
+          arr.push({
+            'id': res.data.data[i].headerRemark,
+            'value': res.data.data[i].headerCode + "-" + res.data.data[i].headerRemark
+          })
+        }
+
+        this.setState({
+          headerlist: arr,
+        });
+      }
+    });
+
 
 
   }
@@ -144,6 +165,14 @@ class newadd extends Component {
       turn: value,
     });
   }
+
+  headerchange = (value) => {
+    console.log(value)
+    this.setState({
+      headertype: value,
+    });
+  }
+  
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
@@ -178,6 +207,7 @@ class newadd extends Component {
         this.state.texture,
         this.state.specification,
         this.state.turn,
+        this.state.headertype,
       ]).then(res => {
         if (res.data && res.data.message === 'success') {
           message.success("设备添加成功");
@@ -202,6 +232,8 @@ class newadd extends Component {
     const powers8 = this.state.data8.map((province, id) => <Menu.Item key={province.id}><Link to={province.code}>{province.name}</Link></Menu.Item>)
     const powers9 = this.state.data9.map((province, id) => <Menu.Item key={province.id}><Link to={province.code}>{province.name}</Link></Menu.Item>)
     const productname = accounttype.map(productnames => <Option key={productnames}>{productnames}</Option>);
+    const headers = this.state.headerlist.map(productnames => <Option key={productnames.id}>{productnames.value}</Option>);
+
     return (
       <div id="newaddbody" >
         <Layout>
@@ -221,14 +253,14 @@ class newadd extends Component {
               <Menu.Item key="9" style={{ background: ' #0099CB', color: 'white', fontSize: "18px", display: "block", width: "94%", borderRadius: '5px', marginLeft: "3%", marginRight: '3%' }}>
                 <Icon type="windows" />
                 <span>水表管理平台</span>
-                  </Menu.Item>
-                  <Menu.Item>
-                                        <Icon type="home" />
-                    <span>
-                      <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
-                    </span>
-                  </Menu.Item>
-                  <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
+              </Menu.Item>
+              <Menu.Item>
+                <Icon type="home" />
+                <span>
+                  <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
+                </span>
+              </Menu.Item>
+              <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
                 {powers}
               </SubMenu>
               <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
@@ -368,6 +400,17 @@ class newadd extends Component {
                       >
                         <Option value="磁传动">M-磁传动</Option>
                         <Option value="轴传动">S-轴传动</Option>
+                      </Select>
+                    </div>
+                    <div className='addinput'>
+                      <span style={{ display: 'inline-block', width: '100px', textAlign: 'right' }}>表头类型：</span>
+                      <Select
+                        className="one"
+                        style={{ width: '60%' }}
+                        onChange={this.headerchange}
+                        placeholder="请选择表头类型"
+                      >
+                        {headers}
                       </Select>
                     </div>
                     <div className="btn">

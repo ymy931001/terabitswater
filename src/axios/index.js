@@ -67,6 +67,7 @@ export const productadd = (params) => http.post(url + '/information/product/add'
 	texture: params[4],
 	specification: params[5],
 	transmission: params[6],
+	deviceheader: params[7],
 });
 
 //2.3 接口信息
@@ -400,6 +401,7 @@ export const productadds = (params) => http.post(url + '/productMonitoring/putOu
 	consigneePhone: params[3],
 	waterMerchantId: params[4],
 	deviceNums: params[5],
+	
 });
 
 
