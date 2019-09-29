@@ -142,18 +142,6 @@ class journal extends React.Component {
         }
       }
     }
-      // , {
-      //   title: '升级进度',
-      //   dataIndex: 'valve',
-      //   render: (text) => {
-      //     return (
-      //       <div>
-      //         <Progress percent={30} />
-      //         {/* <Progress percent={50} status="active" /> */}
-      //       </div>
-      //     )
-      //   }
-      // }
       , {
       title: '最新上报时间',
       dataIndex: 'reportedDatetime',
@@ -357,6 +345,7 @@ class journal extends React.Component {
     if (this.state.selectedRowKeys.length === 0) {
       this.setState({
         selectedRowKeys: this.state.datas.map((data, i) => data.key),
+        keylist: this.state.datas.map((data, i) => data.key),
       },function(){
         console.log(this.state.selectedRowKeys)
       });
