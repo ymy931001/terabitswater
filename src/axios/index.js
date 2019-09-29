@@ -168,6 +168,7 @@ export const wirelessedit = (params) => http.post(url + '/device/setting/editVal
 	deviceNum: params[0],
 	vavle: params[1],
 	reportingInterval: params[2],
+	newDeviceNum: params[3],
 });
 
 //3.6.3 普通水表参数设置

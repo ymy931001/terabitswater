@@ -171,6 +171,21 @@ class journal extends React.Component {
     }, {
       title: '产品编号',
       dataIndex: 'wireless_num',
+      render: (text, record) => {
+        const editable = this.isEditing(record);
+        return (
+          <div>
+            {editable ? (
+              <Input defaultValue={record.wireless_num} disabled={false} onChange={this.wirelessnumchange} style={{ width: '200px' }} />
+            ) : (
+                <Input defaultValue={record.wireless_num} disabled={true} onChange={this.wirelessnumchange} style={{ width: '200px' }} />
+              )
+            }
+
+
+          </div>
+        );
+      },
     }, {
       title: '开关阀设置',
       dataIndex: '开关阀设置',
@@ -296,6 +311,14 @@ class journal extends React.Component {
       reportingInterval: e.target.value,
     });
   }
+
+  wirelessnumchange = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      wirelessnum: e.target.value,
+    });
+  }
+
   isEditing = (record) => {
     return record.id === this.state.editingKey;
   };
@@ -356,6 +379,7 @@ class journal extends React.Component {
               record.wireless_num,
               this.state.dbvaluenum,
               this.state.reportingInterval,
+              this.state.wirelessnum,
             ]).then(res => {
               if (res.data && res.data.message === 'success') {
                 if (res.data.data.开关阀命令结果 != null || res.data.data.开关阀命令结果 != undefined) {
