@@ -171,7 +171,7 @@ class journal extends React.Component {
   handleOk = () => {
     const upgradename = document.getElementById('upgradename').value;
     sendorder([
-      this.state.keylist,
+      this.state.keylist.join(','),
       upgradename,
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
