@@ -20,14 +20,14 @@ const myDate = new Date();
 var now = new Date();
 var date = new Date(now.getTime() - 2 * 24 * 3600 * 1000);
 var year = date.getFullYear();
-var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : '0' + date.getMonth() + 1;
-var day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();;
+var month = date.getMonth() + 1;
+var day =  date.getDate() > 9 ? date.getDate() : '0' + date.getDate();;
 
 
 var date1 = new Date(now.getTime() - 1 * 24 * 3600 * 1000);
 var year1 = date1.getFullYear();
-var month1 = date1.getMonth() + 1 > 9 ? date1.getMonth() + 1 : '0' + date1.getMonth() + 1;
-var day1 = date1.getDate() > 9 ? date1.getDate() : '0' + date1.getDate();;
+var month1 = date1.getMonth() + 1;
+var day1 =  date1.getDate() > 9 ? date1.getDate() : '0' + date1.getDate();;
 
 function disabledDate(current) {
   // Can not select days before today and today
@@ -127,7 +127,7 @@ class journal extends React.Component {
 
   componentWillMount = () => {
     document.title = "小时读数";
-    var powerarr = [];
+       var powerarr = [];
     var powerarr1 = [];
     var powerarr2 = [];
     var powerarr3 = [];
@@ -138,7 +138,7 @@ class journal extends React.Component {
     var powerarr8 = [];
     var powerarr9 = [];
     for (var i = 0; i < this.state.powermenu.length; i++) {
-      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68) {
+      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68 ) {
         powerarr.push(this.state.powermenu[i])
       } else if (this.state.powermenu[i].id === 11 || this.state.powermenu[i].id === 12 || this.state.powermenu[i].id === 13 || this.state.powermenu[i].id === 63) {
         powerarr1.push(this.state.powermenu[i])
@@ -180,7 +180,7 @@ class journal extends React.Component {
       this.state.endtime,
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
-
+       
         if (res.data.data[0] === null) {
           // message.error('所选日期暂无数据，请重新选择')
           this.setState({
@@ -254,41 +254,41 @@ class journal extends React.Component {
                     <span>水表管理平台</span>
                   </Menu.Item>
                   <Menu.Item>
-                    <Icon type="home" />
+                                        <Icon type="home" />
                     <span>
                       <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
                     </span>
                   </Menu.Item>
                   <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
-                    {powers}
+                  {powers}
+                </SubMenu>
+                <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
+                  {powers1}
+                </SubMenu>
+                <SubMenu key="sub3" title={<span><Icon type="user" /><span>用户管理</span></span>}>
+                  {powers2}
+                </SubMenu>
+                <SubMenu key="sub4" title={<span><Icon type="bar-chart" /><span>用水管理</span></span>}>
+                  {powers3}
+                </SubMenu>
+                <SubMenu key="sub5" title={<span><Icon type="tool" /><span>报警管理</span></span>}>
+                  {powers4}
+                </SubMenu>
+                <SubMenu key="sub6" title={<span><Icon type="calendar" /><span>日志管理</span></span>}>
+                  {powers5}
+                  <SubMenu key="sub7" title={<span>用户日志</span>}>
+                    {powers6}
                   </SubMenu>
-                  <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
-                    {powers1}
+                </SubMenu>
+                <SubMenu key="sub8" title={<span><Icon type="sync" /><span>生命周期</span></span>}>
+                  {powers7}
+                </SubMenu>
+                <SubMenu key="sub9" title={<span><Icon type="warning" /><span>产品监控</span></span>}>
+                  <SubMenu key="sub10" title={<span>产品测试</span>}>
+                    {powers8}
                   </SubMenu>
-                  <SubMenu key="sub3" title={<span><Icon type="user" /><span>用户管理</span></span>}>
-                    {powers2}
-                  </SubMenu>
-                  <SubMenu key="sub4" title={<span><Icon type="bar-chart" /><span>用水管理</span></span>}>
-                    {powers3}
-                  </SubMenu>
-                  <SubMenu key="sub5" title={<span><Icon type="tool" /><span>报警管理</span></span>}>
-                    {powers4}
-                  </SubMenu>
-                  <SubMenu key="sub6" title={<span><Icon type="calendar" /><span>日志管理</span></span>}>
-                    {powers5}
-                    <SubMenu key="sub7" title={<span>用户日志</span>}>
-                      {powers6}
-                    </SubMenu>
-                  </SubMenu>
-                  <SubMenu key="sub8" title={<span><Icon type="sync" /><span>生命周期</span></span>}>
-                    {powers7}
-                  </SubMenu>
-                  <SubMenu key="sub9" title={<span><Icon type="warning" /><span>产品监控</span></span>}>
-                    <SubMenu key="sub10" title={<span>产品测试</span>}>
-                      {powers8}
-                    </SubMenu>
-                    {powers9}
-                  </SubMenu>
+                  {powers9}
+                </SubMenu>
                 </Menu>
               </div>
             </Sider>
@@ -311,7 +311,7 @@ class journal extends React.Component {
               <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280, paddingTop: '10px' }}>
                 <div style={{ marginTop: '10px' }}>
                   时间选择:<RangePicker
-                    disabledDate={disabledDate}
+                   disabledDate={disabledDate}
                     style={{ marginLeft: '20px', marginBottom: '20px' }}
                     defaultValue={[moment(this.state.begintime, dateFormat), moment(this.state.endtime, dateFormat)]}
                     format={dateFormat}
