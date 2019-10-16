@@ -334,6 +334,7 @@ class journal extends React.Component {
     finalversion([
 
     ]).then(res => {
+      console.log(res.data)
       this.setState({
         vision: res.data
       });
