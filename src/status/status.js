@@ -929,7 +929,7 @@ class journal extends React.Component {
                   <div className="curr">
                     <Tabs type="card" style={{ background: 'white' }} onChange={this.tabchange}>
                       <TabPane tab="无线单表" key="1" style={{ padding: '20px' }}>
-                        无线单表编号:<Input placeholder="请输入无线单表编号" style={{ width: '20%', marginLeft: '10px', marginRight: '10px' }} id="wirelessid" onKeyDown={this.wirequery} />
+                        无线单表:<Input placeholder="请输入无线单表编号/IMEI" style={{ width: '20%', marginLeft: '10px', marginRight: '10px' }} id="wirelessid" onKeyDown={this.wirequery} />
                         <div style={{ float: "right" }}>
                           <Button type="primary" style={{ marginRight: '20px' }} onClick={this.wirelessquery}>查询</Button>
                           <Button onClick={this.wirelessreset}>重置</Button>
