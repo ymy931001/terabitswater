@@ -251,14 +251,32 @@ class journal extends React.Component {
     }, {
       title: '上线周期(小时)',
       dataIndex: '上传时间间隔',
+      editable: true,
       render: (text, record) => {
         const editable = this.isEditing(record);
         return (
           <div>
             {editable ? (
-              <Input defaultValue={record.上传时间间隔} disabled={false} onChange={this.timeChange} style={{ width: '40%' }} />
+              <Input defaultValue={record.上传时间间隔} disabled={false} onChange={this.timeChange} style={{ width: '40%' }}  />
             ) : (
                 <Input defaultValue={record.上传时间间隔} disabled={true} onChange={this.timeChange} style={{ width: '40%' }} />
+              )
+            }
+          </div>
+        );
+      },
+    }, {
+      title: '当前读数',
+      dataIndex: 'readingLatest',
+      editable: true,
+      render: (text, record) => {
+        const editable = this.isEditing(record);
+        return (
+          <div>
+            {editable ? (
+              <Input value={this.state.readingLatest} disabled={false} onChange={this.readingChange} style={{ width: '80%' }} />
+            ) : (
+                <Input defaultValue={text} disabled={true} onChange={this.readingChange} style={{ width: '80%' }}/>
               )
             }
 
@@ -266,7 +284,6 @@ class journal extends React.Component {
           </div>
         );
       },
-      editable: true,
     }, {
       title: '操作',
       dataIndex: 'id',
@@ -312,6 +329,16 @@ class journal extends React.Component {
     });
   }
 
+  readingChange=(e)=>{
+    console.log(e.target.value)
+    this.setState({
+      readingLatest: e.target.value.replace(/[^\d^\.]+/g,''),
+    });
+  }
+
+
+
+
   wirelessnumchange = (e) => {
     console.log(e.target.value)
     this.setState({
@@ -331,6 +358,7 @@ class journal extends React.Component {
       editingKey: record.id,
       dbvaluenum: record.开关阀设置,
       reportingInterval: record.上传时间间隔,
+      readingLatest: record.readingLatest,
     });
   }
 
@@ -380,6 +408,7 @@ class journal extends React.Component {
               this.state.dbvaluenum,
               this.state.reportingInterval,
               this.state.wirelessnum,
+              Math.floor( this.state.readingLatest * 100) / 100,
             ]).then(res => {
               if (res.data && res.data.message === 'success') {
                 if (res.data.data.开关阀命令结果 != null || res.data.data.开关阀命令结果 != undefined) {

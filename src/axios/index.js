@@ -5,7 +5,7 @@ import http from './tools';
 // const url='http://112.124.6.31:9090';
 // const url = 'http://172.16.23.23:8040/resourcemanager';
 const url = 'http://47.110.136.32:8040/resourcemanager';
-// const url = 'http://192.168.31.180:9090';
+// const url = 'http://192.168.31.193:8081/resourcemanager';
 
 
 
@@ -169,6 +169,7 @@ export const wirelessedit = (params) => http.post(url + '/device/setting/editVal
 	vavle: params[1],
 	reportingInterval: params[2],
 	newDeviceNum: params[3],
+	deviceReading: params[4],
 });
 
 //3.6.3 普通水表参数设置
