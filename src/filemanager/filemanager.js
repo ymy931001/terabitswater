@@ -1,55 +1,33 @@
 import React, { Component } from 'react';
-import { Icon, Menu, Layout, Button, Form, message, Modal, Table, Select, Input, Row, AutoComplete, LocaleProvider } from 'antd';
+import { Icon, Menu, Layout, Button, Form, message, Modal, Table, Checkbox, Input, Popconfirm, Upload, LocaleProvider } from 'antd';
 import { Link } from 'react-router-dom';
-import { wireless, sendorder, finalversion, allBin } from '../axios';
+import { wireless, sendorder, finalversion, allBin, uploadToSql, downloadbin, deletebin } from '../axios';
 import { createForm } from 'rc-form';
-import './upgrade.css';
+import './filemanager.css';
 import Headers from '../header';
 import moment from 'moment';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 
-const props = {
-  name: 'file',
-  action: "http://47.110.136.32:9333/upload",
-  beforeUpload: file => {
-    const fileName = file.name.split(".");
-    const isBin = fileName[1] === "bin";
-    if (!isBin) {
-      message.error("只能上传bin文件");
-    }
-    // const isTrue = /^00_0[1-2][0-9]{2}$/.test(fileName[0]);
-    // if (!isTrue) {
-    //   message.error("文件名不合规范");
-    // }
-    // return isBin && isTrue;
-    return isBin
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} 升级文件上传成功`);
-      finalversion([
 
-      ]).then(res => {
-        this.setState({
-          vision: res.data
-        });
-      })
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} 升级文件上传失败`);
-    }
-  },
+
+
+
+function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
 }
+
 
 
 const myDate = new Date();
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
-const Option = Select.Option;
+
+
+
 
 
 class journal extends React.Component {
@@ -62,7 +40,6 @@ class journal extends React.Component {
       enterprisetype: '',
       selected: '',
       selectedRowKeys: '',
-      macedata: [],
       checked: '',
       color: "",
       listnum: '',
@@ -73,78 +50,50 @@ class journal extends React.Component {
       huoers: '',
     };
     this.columns = [{
-      title: '设备编号',
-      dataIndex: 'wirelessNum',
-      sorter: (a, b) => a.wirelessNum.slice(-5) - b.wirelessNum.slice(-5),
-      // filtered: true,
-      // filters: [
-      //   { text: "0-100", value: [0, 100] },
-      //   { text: "100-200", value: [100, 200] },
-      //   { text: "200-300", value: [200, 300] },
-      // ],
-      // onFilter: (value, record) => record.wirelessNum.slice(-4) <= value[1] && value[0] <= record.wirelessNum.slice(-4),
-    },
-    {
-      title: '软件版本',
-      dataIndex: 'software',
-      // defaultSortOrder: 'descend',
-      sorter: (a, b) => a.software - b.software,
-    }, {
-      title: '信号强度',
-      dataIndex: "signalIntensity",
+      title: '文件名称',
+      dataIndex: 'name',
     },
     {
       title: '模组开启前电压',
-      dataIndex: 'voltage'
+      dataIndex: 'pckcount'
     }, {
-      title: '模组开启后电压',
-      dataIndex: 'voltage2',
+      title: '版本号',
+      dataIndex: 'version',
     }, {
-      title: '阀门状态',
-      dataIndex: 'valve',
-      filtered: true,
-      filters: [
-        { text: "开阀", value: "0" },
-        { text: "关阀", value: "1" },
-        { text: "半悬", value: "2" },
-        { text: "非阀控", value: "3" },
-      ],
-      onFilter: (value, record) => record.valve.includes(value),
-      render: (text) => {
-        if (text === '0') {
-          return (
-            <div>
-              <span style={{ color: 'green' }}>开阀</span>
-            </div>
-          )
-        }
-        if (text === '1') {
-          return (
-            <div>
-              <span style={{ color: 'red' }}>关阀</span>
-            </div>
-          )
-        }
-        if (text === '2') {
-          return (
-            <div>
-              <span style={{ color: 'purple' }}>半悬</span>
-            </div>
-          )
-        }
-        if (text === '3') {
-          return (
-            <div>
-              <span style={{ color: 'black' }}>非阀控</span>
-            </div>
-          )
-        }
-      }
-    }
-      , {
-      title: '最新上报时间',
-      dataIndex: 'reportedDatetime',
-    }
+      title: '备注',
+      dataIndex: 'remark',
+    }, {
+      title: '上传时间',
+      dataIndex: 'gmtcreate',
+    }, {
+      title: '下载',
+      dataIndex: 'version',
+      render: (text, record, index) => {
+        return (
+          <div>
+            <Button onClick={() => this.download(text)} type="primary">
+              <a href={this.state.export1} >
+                下载
+              </a>
+            </Button>
+          </div>
+        );
+      },
+    }, {
+      title: '操作',
+      dataIndex: 'version',
+      render: (text, record, index) => {
+        return (
+          <div>
+            <span style={{ marginLeft: '10px' }}>
+              <Popconfirm title="确定要删除吗?" onConfirm={() => this.onDelete(text)}>
+                <a href="javascript:;">删除</a>
+              </Popconfirm>
+            </span>
+          </div>
+        );
+      },
+    },
     ];
   }
 
@@ -152,6 +101,41 @@ class journal extends React.Component {
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
+    });
+  }
+
+  download = (text) => {
+    this.setState({
+      export1: 'http://47.110.136.32:9333/bin/download?access_token=' + localStorage.getItem('access_token') + "&version=" + text
+    })
+  }
+
+  onDelete = (text, key) => {
+    console.log(text)
+    this.props.form.validateFields({ force: true }, (error) => {
+      if (!error) {
+        deletebin([
+          text,
+        ]).then(res => {
+          if (res.data && res.data.message === 'success') {
+            message.success("信息删除成功");
+            const dataSource = [...this.state.data];
+            this.setState({
+              num: this.state.num - 1,
+              data: dataSource.filter(item => item.key !== key),
+            });
+            allBin([
+
+            ]).then(res => {
+              if (res.data && res.data.message === 'success') {
+                this.setState({
+                  data: res.data.data,
+                });
+              }
+            })
+          }
+        });
+      }
     });
   }
 
@@ -168,16 +152,15 @@ class journal extends React.Component {
   }
 
   handleOk = () => {
-    const upgradename = document.getElementById('upgradename').value;
-    sendorder([
-      this.state.keylist.join(','),
-      this.state.macdata,
-      upgradename,
+    this.setState({
+      equvisible: false,
+    });
+    allBin([
+
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
-        message.success('升级指令下发成功')
         this.setState({
-          equvisible: false,
+          data: res.data.data,
         });
       }
     })
@@ -202,11 +185,7 @@ class journal extends React.Component {
     });
   }
 
-  showequiement = () => {
-    this.setState({
-      equvisible: true,
-    });
-  }
+
 
   equipmentquery = () => {
     var nbtest = document.getElementById('nbtest').value
@@ -314,80 +293,68 @@ class journal extends React.Component {
 
 
 
-    wireless([
+    allBin([
 
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
-        for (var i = 0; i < res.data.data.length; i++) {
-          res.data.data[i].key = res.data.data[i].wirelessNum
-        }
-        console.log(res.data.data)
         this.setState({
           data: res.data.data,
-          datas: res.data.data,
-          num: res.data.data.length,
         });
       }
-
     })
-
-    allBin({
-
-    }).then(res => {
-      if (res.data && res.data.message === "success") {
-        console.log(res.data.data)
-        var arr2 = []
-        for (var i in res.data.data) {
-          arr2.push({
-            'left': res.data.data[i].name,
-            'right': res.data.data[i].version,
-          })
-        }
-        this.setState({
-          macedata: arr2
-        });
-      }
-    });
 
   }
 
-  onSelectAll = () => {
-    if (this.state.selectedRowKeys.length === 0) {
-      this.setState({
-        selectedRowKeys: this.state.datas.map((data, i) => data.key),
-        keylist: this.state.datas.map((data, i) => data.key),
-      }, function () {
-        console.log(this.state.selectedRowKeys)
-      });
-    } else {
-      this.setState({
-        selectedRowKeys: [],
-      });
+  showequiement = () => {
+    this.setState({
+      equvisible: true,
+    });
+  }
+
+  handleCancel = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+      equvisible: false,
+    });
+  }
+
+  version = (e) => {
+    this.setState({
+      version: e.target.value
+    })
+  }
+
+  remark = (e) => {
+    this.setState({
+      remark: e.target.value
+    })
+  }
+
+  pcitureload = (info) => {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} 升级文件上传成功`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} 升级文件上传失败`);
+    }
+  }
+
+  beforeUpload = file => {
+    const fileName = file.name.split(".");
+    const isBin = fileName[1] === "bin";
+    if (!isBin) {
+      message.error("只能上传bin文件");
+      return false
     }
   }
 
 
-  listonChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter);
-    console.log(extra)
-    this.setState({
-      num: extra.currentDataSource.length,
-      datas: extra.currentDataSource,
-    })
-  }
-
-
-  macdata = (value) => {
-    console.log(value)
-    this.setState({
-      macdata: value
-    })
-  }
-
-
-
 
   render() {
+
     const powers = this.state.menudata.map((province, id) => <Menu.Item key={province.id}><Link to={province.code}>{province.name}</Link></Menu.Item>)
     const powers1 = this.state.data1.map((province, id) => <Menu.Item key={province.id}><Link to={province.code}>{province.name}</Link></Menu.Item>)
     const powers2 = this.state.data2.map((province, id) => <Menu.Item key={province.id}><Link to={province.code}>{province.name}</Link></Menu.Item>)
@@ -422,19 +389,6 @@ class journal extends React.Component {
         }),
       };
     });
-
-
-    const serialdatas = this.state.macedata.map(
-      (province) => <Option key={province.right} text={province.left}>
-        <div className="global-search-item">
-          <span className="global-search-item-desc" style={{ color: '#1890ff' }}>
-            {province.left}
-          </span>
-          <span className="global-search-item-count" style={{ float: 'right', fontSize: "12px", color: '#999' }}>
-            {province.right}
-          </span>
-        </div>
-      </Option>);
 
     return (
       <LocaleProvider locale={zh_CN}>
@@ -508,91 +462,74 @@ class journal extends React.Component {
                 <Headers />
               </Header>
               <div className="nav">
-                设备管理 /  设备升级
+                设备管理 /  Bin文件管理
             </div>
               <div className="tit">
-                设备升级
+                Bin文件管理
             </div>
               <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280, paddingTop: '10px' }}>
                 <div style={{ marginTop: '10px' }}>
-                  水表编号:<Input placeholder="请输入水表编号" onKeyDown={this.wirequery} style={{ width: '20%', marginLeft: '10px', marginRight: '10px' }} id="nbtest" autoComplete="off" />
+                  {/* 水表编号:<Input placeholder="请输入水表编号" onKeyDown={this.wirequery} style={{ width: '20%', marginLeft: '10px', marginRight: '10px' }} id="nbtest" autoComplete="off" />
                   <Input placeholder="最小值" style={{ width: '100px', marginLeft: '10px', marginRight: '10px' }} id="min" autoComplete="off" />~
                   <Input placeholder="最大值" style={{ width: '100px', marginLeft: '10px', marginRight: '10px' }} id="max" autoComplete="off" />
-                  <Button type="primary" onClick={this.equipmentquery} style={{ marginRight: '20px' }}>查询</Button>
-                  <div style={{ float: "right" }}>
-                    <Button
-                      type="primary"
-                      style={{ background: 'red', border: 'none', marginRight: '20px' }}
-                      icon="arrow-up"
-                      onClick={this.showequiement}
-                    >
-                      设备升级
+                  <Button type="primary" onClick={this.equipmentquery} style={{ marginRight: '20px' }}>查询</Button> */}
+                  <div style={{ textAlign: "right", marginBottom: '10px' }}>
+                    <Button type="primary" onClick={this.showequiement}>
+                      上传升级文件
                     </Button>
-                    <Modal
-                      title="设备升级"
-                      width="400px"
-                      visible={this.state.equvisible}
-                      onOk={this.handleOk}
-                      onCancel={this.handleCancel}
-                      okText="确认"
-                    >
-                      <div>共选中 <span style={{ color: 'rgb(73, 169, 238)' }}>{hasSelected ? `   ${selectedRowKeys.length}  ` : '0'}</span> 台设备</div>
-                      <div style={{ marginTop: "10px", marginBottom: "10px" }}>
-                        <span style={{ color: 'red', marginRight: '5px' }}>*</span>
-                        <span>升级名称：</span>
-                      </div>
-                      <Input placeholder="请输入升级名称" style={{ width: '100%', marginBottom: '10px' }} id="upgradename" autoComplete="off" />
-                      <div style={{ marginBottom: "10px" }}>
-                        <span style={{ color: 'red', marginRight: '5px' }}>*</span>
-                        <span>选择文件：</span>
-                      </div>
-                      <AutoComplete
-                        style={{ width: '100%'}}
-                        id="macname"
-                        dataSource={serialdatas}
-                        placeholder="请选择升级文件"
-                        onChange={this.macdata}
-                        optionLabelProp="text"
-                        filterOption={
-                          (inputValue, option) =>
-                            option.props.text.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                        }
-                      />
-                      {/* <Input placeholder="请选择升级文件" style={{ width: '100%', marginBottom: '10px' }} id="upgradename" autoComplete="off" /> */}
-                    </Modal>
-                    <Button type="primary" style={{ background: 'green', border: 'none', marginRight: '20px' }}>
-                      <Link to="/upgradehistory">升级历史记录</Link>
-                    </Button>
-                    <Button type="primary" >
-                      <Link to="/filemanager">升级文件管理</Link>
-                    </Button>
-                    {/* <Upload {...props}>
-                      <Button>
-                        <Icon type="upload" /> 上传升级文件
-                        </Button>
-                    </Upload> */}
                   </div>
                 </div>
                 <div style={{ marginTop: '10px' }}>
-                  <div style={{ marginBottom: '10px' }}>
-                    查询结果：共
-                    <span style={{ color: 'rgb(73, 169, 238)', marginLeft: '10px' }}>{this.state.num}
-                    </span> 台设备 当前选中： <span style={{ color: 'rgb(73, 169, 238)' }}>{hasSelected ? `   ${selectedRowKeys.length}  ` : ''}</span> 台设备&nbsp;&nbsp;&nbsp;
-                  </div>
                   <Table
                     bordered
                     rowSelection={rowSelect}
                     dataSource={this.state.data}
                     columns={columns}
                     rowClassName="editable-row"
-                    onChange={this.listonChange}
                   />
                 </div>
               </Content>
+              <Modal
+                title="升级文件上传"
+                width="400px"
+                visible={this.state.equvisible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+                okText="确认"
+              >
+                <div style={{ marginBottom: "10px" }}>
+                  <span style={{ color: 'red', marginRight: '5px' }}>*</span>
+                  <span>版本号：</span>
+                </div>
+                <Input placeholder="请输入版本号" style={{ width: '100%', marginBottom: '10px' }} id="version" autoComplete="off" onChange={this.version} />
+                <div style={{ marginBottom: "10px" }}>
+                  <span style={{ color: 'red', marginRight: '5px' }}>*</span>
+                  <span>备注：</span>
+                </div>
+                <Input placeholder="请输入备注" style={{ width: '100%', marginBottom: '10px' }} id="remark" autoComplete="off" onChange={this.remark} />
+                <div style={{ marginBottom: "10px" }}>
+                  <span style={{ color: 'red', marginRight: '5px' }}>*</span>
+                  <span>文件上传：</span>
+                </div>
+                <Upload
+                  name='file'
+                  action="http://47.110.136.32:9333/bin/uploadToSql"
+                  onChange={this.pcitureload}
+                  data={file => ({
+                    remark: this.state.remark,
+                    version: this.state.version,
+                  })}
+                  beforeUpload={this.handleBeforeUpload}
+                >
+                  <Button styl={{ width: "100%" }}>
+                    <Icon type="upload" /> 上传升级文件
+                  </Button>
+                </Upload>
+              </Modal>
             </Layout>
           </Layout>
         </div>
-      </LocaleProvider>
+      </LocaleProvider >
     )
   }
 }

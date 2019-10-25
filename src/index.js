@@ -50,6 +50,8 @@ import tenement from './tenement/tenement';
 import community from './community/community';
 import addtenement from './addtenement/addtenement';
 import waterheader from './waterheader/waterheader';
+import filemanager from './filemanager/filemanager';
+
 import moment from 'moment';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
@@ -114,6 +116,7 @@ ReactDOM.render(
       <Route path='/community' component={community} />
       <Route path='/addtenement' component={addtenement} />
       <Route path='/waterheader' component={waterheader} />
+      <Route path='/filemanager' component={filemanager} />
       <Route component={NoaMatch}/>
     </Switch>
   </Router>

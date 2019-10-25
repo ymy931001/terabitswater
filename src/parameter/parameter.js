@@ -280,8 +280,6 @@ class journal extends React.Component {
                   <Input defaultValue={text} disabled={true} style={{ width: '80%' }} />
                 )
               }
-
-
             </div>
           );
         } else {
@@ -293,8 +291,6 @@ class journal extends React.Component {
                   <Input defaultValue={text} disabled={true} onChange={this.readingChange} style={{ width: '80%' }} />
                 )
               }
-
-
             </div>
           );
         }

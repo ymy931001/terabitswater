@@ -7,7 +7,7 @@ import http from './tools';
 const url = 'http://47.110.136.32:8040/resourcemanager';
 // const url = 'http://192.168.31.193:8081/resourcemanager';
 
-
+const url1 = 'http://47.110.136.32:9333';
 
 // //1.1登录界面
 // export const login = (params) => http.getlogin('http://47.99.206.94:8040/auth/login?username=' + params[0] + '&password=' + params[1] + '&type=user&grant_type=password', {
@@ -595,7 +595,8 @@ export const getworkorders = (params) => http.get(url + '/productMonitoring/work
 export const sendorder = (params) => http.post('http://47.110.136.32:9333/ota/sendorder', {
 	access_token: localStorage.getItem('access_token'),
 	meterNum: params[0],
-	remark: params[1],
+	version:params[1],
+	remark: params[2],
 });
 
 
@@ -715,6 +716,32 @@ export const headerdataStatistics = (params) => http.get(url + '/information/hea
 	access_token: localStorage.getItem('access_token'),
 });
 
+
+//16.1 bin文件列表
+export const allBin = (params) => http.post(url1+'/bin/allBin', {
+	access_token: localStorage.getItem('access_token'),
+});
+
+
+//16.2 上传bin文件
+export const uploadToSql = (params) => http.post(url1+'/bin/uploadToSql', {
+	access_token: localStorage.getItem('access_token'),
+	file: params[0],
+	version: params[1],
+	remark: params[2],
+});
+
+//16.3 下载bin文件
+export const downloadbin = (params) => http.post(url1+'/bin/download', {
+	access_token: localStorage.getItem('access_token'),
+	version: params[0],
+});
+
+//16.3 删除bin文件
+export const deletebin = (params) => http.post(url1+'/bin/delete', {
+	access_token: localStorage.getItem('access_token'),
+	version: params[0],
+});
 
 
 
