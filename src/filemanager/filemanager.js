@@ -349,6 +349,10 @@ class journal extends React.Component {
       message.error("只能上传bin文件");
       return false
     }
+    if (!this.state.version || !this.state.remark) {
+      message.error("请填写相关信息");
+      return false
+    }
   }
 
 
