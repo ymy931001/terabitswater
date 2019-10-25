@@ -194,11 +194,11 @@ class journal extends React.Component {
         return (
           <div>
             {editable ? (
-              <Select defaultValue={typetext[text]}   onChange={this.typeChange} style={{ width: '80%' }} disabled={false} >
+              <Select defaultValue={typetext[text]} onChange={this.typeChange} style={{ width: '80%' }} disabled={false} >
                 {typeOptions}
               </Select>
             ) : (
-                <Select defaultValue={typetext[text]}   onChange={this.typeChange} style={{ width: '80%' }} disabled={true} >
+                <Select defaultValue={typetext[text]} onChange={this.typeChange} style={{ width: '80%' }} disabled={true} >
                   {typeOptions}
                 </Select>
               )
@@ -257,7 +257,7 @@ class journal extends React.Component {
         return (
           <div>
             {editable ? (
-              <Input defaultValue={record.上传时间间隔} disabled={false} onChange={this.timeChange} style={{ width: '40%' }}  />
+              <Input defaultValue={record.上传时间间隔} disabled={false} onChange={this.timeChange} style={{ width: '40%' }} />
             ) : (
                 <Input defaultValue={record.上传时间间隔} disabled={true} onChange={this.timeChange} style={{ width: '40%' }} />
               )
@@ -271,18 +271,33 @@ class journal extends React.Component {
       editable: true,
       render: (text, record) => {
         const editable = this.isEditing(record);
-        return (
-          <div>
-            {editable ? (
-              <Input value={this.state.readingLatest} disabled={false} onChange={this.readingChange} style={{ width: '80%' }} />
-            ) : (
-                <Input defaultValue={text} disabled={true} onChange={this.readingChange} style={{ width: '80%' }}/>
-              )
-            }
+        if (record.bx === "41" || record.bx === "C1") {
+          return (
+            <div>
+              {editable ? (
+                <Input value={this.state.readingLatest} disabled={false} style={{ width: '80%' }} />
+              ) : (
+                  <Input defaultValue={text} disabled={true} style={{ width: '80%' }} />
+                )
+              }
 
 
-          </div>
-        );
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              {editable ? (
+                <Input value={this.state.readingLatest} disabled={true} onChange={this.readingChange} style={{ width: '80%' }} />
+              ) : (
+                  <Input defaultValue={text} disabled={true} onChange={this.readingChange} style={{ width: '80%' }} />
+                )
+              }
+
+
+            </div>
+          );
+        }
       },
     }, {
       title: '操作',
@@ -297,7 +312,7 @@ class journal extends React.Component {
                   {form => (
                     <a
                       href="javascript:;"
-                      onClick={() => this.save(form,record, index)}
+                      onClick={() => this.save(form, record, index)}
                       style={{ marginRight: 8 }}
                     >
                       保存
@@ -329,10 +344,10 @@ class journal extends React.Component {
     });
   }
 
-  readingChange=(e)=>{
+  readingChange = (e) => {
     console.log(e.target.value)
     this.setState({
-      readingLatest: e.target.value.replace(/[^\d^\.]+/g,''),
+      readingLatest: e.target.value.replace(/[^\d^\.]+/g, ''),
     });
   }
 
@@ -353,7 +368,7 @@ class journal extends React.Component {
   edit(text, record) {
     console.log(record.上传时间间隔)
     this.setState({
-      nowtext:typetext[record.开关阀设置],
+      nowtext: typetext[record.开关阀设置],
       originalinterval: record.上传时间间隔,
       editingKey: record.id,
       dbvaluenum: record.开关阀设置,
@@ -380,16 +395,16 @@ class journal extends React.Component {
         reportingInterval: null,
       });
     }
-    if (this.state.reportingInterval != "" && this.state.reportingInterval != null && parseInt(this.state.reportingInterval&&this.state.reportingInterval != undefined) < 24) {
+    if (this.state.reportingInterval != "" && this.state.reportingInterval != null && parseInt(this.state.reportingInterval && this.state.reportingInterval != undefined) < 24) {
       message.error('修改失败:上传时间间隔需大于24')
-    } else{
+    } else {
       form.validateFields((error, row) => {
         if (error) {
           return;
         }
-        record.开关阀设置=this.state.dbvaluenum;
+        record.开关阀设置 = this.state.dbvaluenum;
         const newData = [...this.state.data];
-        console.log( [...this.state.data])
+        console.log([...this.state.data])
         const index = newData.findIndex(item => record.id === item.key);
         if (index > -1) {
           console.log(index)
@@ -408,7 +423,7 @@ class journal extends React.Component {
               this.state.dbvaluenum,
               this.state.reportingInterval,
               this.state.wirelessnum,
-              Math.floor( this.state.readingLatest * 100) / 100,
+              Math.floor(this.state.readingLatest * 100) / 100,
             ]).then(res => {
               if (res.data && res.data.message === 'success') {
                 if (res.data.data.开关阀命令结果 != null || res.data.data.开关阀命令结果 != undefined) {
@@ -428,9 +443,9 @@ class journal extends React.Component {
                 message.error("设备未激活，请先激活！");
               }
             });
-  
+
           });
-  
+
         } else {
           newData.push(this.state.data);
           this.setState({ data: newData, editingKey: '' });
@@ -511,7 +526,7 @@ class journal extends React.Component {
 
   wirequery = (e) => {
     var wirelessid = document.getElementById('wirelessid').value
-    if(e.keyCode === 13){
+    if (e.keyCode === 13) {
       setparameter([
         wirelessid,
         1,
@@ -528,7 +543,7 @@ class journal extends React.Component {
         }
       });
     }
-  
+
   }
 
   wirelessreset = () => {
@@ -590,7 +605,7 @@ class journal extends React.Component {
 
   componentWillMount = () => {
     document.title = "设备基本信息";
-       var powerarr = [];
+    var powerarr = [];
     var powerarr1 = [];
     var powerarr2 = [];
     var powerarr3 = [];
@@ -601,7 +616,7 @@ class journal extends React.Component {
     var powerarr8 = [];
     var powerarr9 = [];
     for (var i = 0; i < this.state.powermenu.length; i++) {
-      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68 ) {
+      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68) {
         powerarr.push(this.state.powermenu[i])
       } else if (this.state.powermenu[i].id === 11 || this.state.powermenu[i].id === 12 || this.state.powermenu[i].id === 13 || this.state.powermenu[i].id === 63) {
         powerarr1.push(this.state.powermenu[i])
@@ -700,7 +715,7 @@ class journal extends React.Component {
     console.log(date)
     this.setState({
       dbvalue: date,
-      nowtext:date,
+      nowtext: date,
       dbvaluenum: typenum[date],
     }, function () {
       console.log(this.state.dbvaluenum)
@@ -781,142 +796,142 @@ class journal extends React.Component {
 
     return (
       <LocaleProvider locale={zh_CN}>
-      <div id="basicbody" >
-        <Layout>
-          <Sider
-            trigger={null}
-            collapsible
-            collapsed={this.state.collapsed}
-          >
-            <div />
-            <div className="Layout-left">
-              <Menu
-                defaultSelectedKeys={['13']}
-                defaultOpenKeys={['sub2']}
-                mode="inline"
-                theme="dark"
-                inlineCollapsed={this.state.collapsed}
-              >
-                <Menu.Item key="2" style={{ background: '#0099CB', color: 'white', fontSize: "18px", display: "block", width: "94%", borderRadius: '5px', marginLeft: "3%", marginRight: '3%' }}>
-                  <Icon type="windows" />
-                  <span>水表管理平台</span>
+        <div id="basicbody" >
+          <Layout>
+            <Sider
+              trigger={null}
+              collapsible
+              collapsed={this.state.collapsed}
+            >
+              <div />
+              <div className="Layout-left">
+                <Menu
+                  defaultSelectedKeys={['13']}
+                  defaultOpenKeys={['sub2']}
+                  mode="inline"
+                  theme="dark"
+                  inlineCollapsed={this.state.collapsed}
+                >
+                  <Menu.Item key="2" style={{ background: '#0099CB', color: 'white', fontSize: "18px", display: "block", width: "94%", borderRadius: '5px', marginLeft: "3%", marginRight: '3%' }}>
+                    <Icon type="windows" />
+                    <span>水表管理平台</span>
                   </Menu.Item>
                   <Menu.Item>
-                                        <Icon type="home" />
+                    <Icon type="home" />
                     <span>
                       <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
                     </span>
                   </Menu.Item>
                   <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
-                  {powers}
-                </SubMenu>
-                <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
-                  {powers1}
-                </SubMenu>
-                <SubMenu key="sub3" title={<span><Icon type="user" /><span>用户管理</span></span>}>
-                  {powers2}
-                </SubMenu>
-                <SubMenu key="sub4" title={<span><Icon type="bar-chart" /><span>用水管理</span></span>}>
-                  {powers3}
-                </SubMenu>
-                <SubMenu key="sub5" title={<span><Icon type="tool" /><span>报警管理</span></span>}>
-                  {powers4}
-                </SubMenu>
-                <SubMenu key="sub6" title={<span><Icon type="calendar" /><span>日志管理</span></span>}>
-                  {powers5}
-                  <SubMenu key="sub7" title={<span>用户日志</span>}>
-                    {powers6}
+                    {powers}
                   </SubMenu>
-                </SubMenu>
-                <SubMenu key="sub8" title={<span><Icon type="sync" /><span>生命周期</span></span>}>
-                  {powers7}
-                </SubMenu>
-                <SubMenu key="sub9" title={<span><Icon type="warning" /><span>产品监控</span></span>}>
-                  <SubMenu key="sub10" title={<span>产品测试</span>}>
-                    {powers8}
+                  <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
+                    {powers1}
                   </SubMenu>
-                  {powers9}
-                </SubMenu>
-              </Menu>
+                  <SubMenu key="sub3" title={<span><Icon type="user" /><span>用户管理</span></span>}>
+                    {powers2}
+                  </SubMenu>
+                  <SubMenu key="sub4" title={<span><Icon type="bar-chart" /><span>用水管理</span></span>}>
+                    {powers3}
+                  </SubMenu>
+                  <SubMenu key="sub5" title={<span><Icon type="tool" /><span>报警管理</span></span>}>
+                    {powers4}
+                  </SubMenu>
+                  <SubMenu key="sub6" title={<span><Icon type="calendar" /><span>日志管理</span></span>}>
+                    {powers5}
+                    <SubMenu key="sub7" title={<span>用户日志</span>}>
+                      {powers6}
+                    </SubMenu>
+                  </SubMenu>
+                  <SubMenu key="sub8" title={<span><Icon type="sync" /><span>生命周期</span></span>}>
+                    {powers7}
+                  </SubMenu>
+                  <SubMenu key="sub9" title={<span><Icon type="warning" /><span>产品监控</span></span>}>
+                    <SubMenu key="sub10" title={<span>产品测试</span>}>
+                      {powers8}
+                    </SubMenu>
+                    {powers9}
+                  </SubMenu>
+                </Menu>
+              </div>
+            </Sider>
+            <Layout>
+              <Header style={{ background: '#fff', padding: 0 }}>
+                <Button type="primary" onClick={this.toggle} style={{ marginLeft: "16px", float: 'left', marginTop: '15px' }}>
+                  <Icon
+                    className="trigger"
+                    type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                  />
+                </Button>
+                <Headers />
+              </Header>
+              <div className="nav">
+                设备管理 / 参数设置
             </div>
-          </Sider>
-          <Layout>
-            <Header style={{ background: '#fff', padding: 0 }}>
-              <Button type="primary" onClick={this.toggle} style={{ marginLeft: "16px", float: 'left', marginTop: '15px' }}>
-                <Icon
-                  className="trigger"
-                  type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                />
-              </Button>
-              <Headers />
-            </Header>
-            <div className="nav">
-              设备管理 / 参数设置
+              <div className="tit">
+                参数设置
             </div>
-            <div className="tit">
-              参数设置
-            </div>
-            <Content style={{ margin: '24px 16px', background: '#fff', minHeight: 280 }}>
-              <div className="current">
-                <div className="curr">
-                  <Tabs onChange={this.tabchange} type="card" style={{ background: 'white' }}>
-                    <TabPane tab="无线单表" key="1" style={{ padding: '20px' }}>
-                      无线单表:<Input placeholder="请输入无线单表编号/IMEI" style={{ width: '20%', marginLeft: '10px', marginRight: '10px' }} id="wirelessid" onKeyDown={this.wirequery} />
-                      <div style={{ float: "right" }}>
-                        <Button type="primary" style={{ marginRight: '20px' }} onClick={this.wirelessquery}>查询</Button>
-                        <Button onClick={this.wirelessreset}>重置</Button>
-                      </div>
-                      <div className="derive">
-                        <Icon type="info-circle-o" />
-                        &nbsp; &nbsp;已选择<span style={{ marginLeft: 8, color: 'rgba(0, 51, 255, 0.647058823529412)', fontWeight: 'bold' }}>
-                          {dbhasSelected ? `   ${dbselectedRowKeys.length}  ` : ''}
-                        </span>条记录
+              <Content style={{ margin: '24px 16px', background: '#fff', minHeight: 280 }}>
+                <div className="current">
+                  <div className="curr">
+                    <Tabs onChange={this.tabchange} type="card" style={{ background: 'white' }}>
+                      <TabPane tab="无线单表" key="1" style={{ padding: '20px' }}>
+                        无线单表:<Input placeholder="请输入无线单表编号/IMEI" style={{ width: '20%', marginLeft: '10px', marginRight: '10px' }} id="wirelessid" onKeyDown={this.wirequery} />
+                        <div style={{ float: "right" }}>
+                          <Button type="primary" style={{ marginRight: '20px' }} onClick={this.wirelessquery}>查询</Button>
+                          <Button onClick={this.wirelessreset}>重置</Button>
+                        </div>
+                        <div className="derive">
+                          <Icon type="info-circle-o" />
+                          &nbsp; &nbsp;已选择<span style={{ marginLeft: 8, color: 'rgba(0, 51, 255, 0.647058823529412)', fontWeight: 'bold' }}>
+                            {dbhasSelected ? `   ${dbselectedRowKeys.length}  ` : ''}
+                          </span>条记录
                 列表记录总计： <span style={{ color: 'rgba(0, 51, 255, 0.647058823529412)', fontWeight: 'bold' }}>{this.state.num1}</span> 条
                 {/* <Button type="primary" style={{ float: 'right', marginTop: '3px' }}>数据导出</Button> */}
-                      </div>
-                      <div style={{ marginTop: '10px' }}>
-                        <Table
-                          rowSelection={rowSelections}
-                          components={components}
-                          dataSource={this.state.data}
-                          columns={columns}
-                          bordered
-                          rowClassName="editable-row"
-                        />
-                      </div>
-                    </TabPane>
-                    <TabPane tab="普通水表" key="2" style={{ padding: '20px' }}>
-                      普通水表编号:<Input placeholder="请输入普通水表编号" style={{ width: '20%', marginLeft: '10px', marginRight: '10px' }} id="generalid" />
-                      <div style={{ float: "right" }}>
-                        <Button type="primary" style={{ marginRight: '20px' }} onClick={this.generalquery}>查询</Button>
-                        <Button onClick={this.generalreset}>重置</Button>
-                      </div>
-                      <div className="derive">
-                        <Icon type="info-circle-o" />
-                        &nbsp; &nbsp;已选择<span style={{ marginLeft: 8, color: 'rgba(0, 51, 255, 0.647058823529412)', fontWeight: 'bold' }}>
-                          {hasSelected ? `   ${selectedRowKeys.length}  ` : ''}
-                        </span>条记录
+                        </div>
+                        <div style={{ marginTop: '10px' }}>
+                          <Table
+                            rowSelection={rowSelections}
+                            components={components}
+                            dataSource={this.state.data}
+                            columns={columns}
+                            bordered
+                            rowClassName="editable-row"
+                          />
+                        </div>
+                      </TabPane>
+                      <TabPane tab="普通水表" key="2" style={{ padding: '20px' }}>
+                        普通水表编号:<Input placeholder="请输入普通水表编号" style={{ width: '20%', marginLeft: '10px', marginRight: '10px' }} id="generalid" />
+                        <div style={{ float: "right" }}>
+                          <Button type="primary" style={{ marginRight: '20px' }} onClick={this.generalquery}>查询</Button>
+                          <Button onClick={this.generalreset}>重置</Button>
+                        </div>
+                        <div className="derive">
+                          <Icon type="info-circle-o" />
+                          &nbsp; &nbsp;已选择<span style={{ marginLeft: 8, color: 'rgba(0, 51, 255, 0.647058823529412)', fontWeight: 'bold' }}>
+                            {hasSelected ? `   ${selectedRowKeys.length}  ` : ''}
+                          </span>条记录
                 列表记录总计： <span style={{ color: 'rgba(0, 51, 255, 0.647058823529412)', fontWeight: 'bold' }}>{this.state.num2}</span> 条
                 {/* <Button type="primary" style={{ float: 'right', marginTop: '3px' }}>数据导出</Button> */}
-                      </div>
-                      <div style={{ marginTop: '10px' }}>
-                        <Table
-                          rowSelection={rowSelection}
-                          dataSource={this.state.dataSource}
-                          components={components}
-                          columns={sbcolumn}
-                          bordered
-                          rowClassName="editable-row"
-                        />
-                      </div>
-                    </TabPane>
-                  </Tabs>
+                        </div>
+                        <div style={{ marginTop: '10px' }}>
+                          <Table
+                            rowSelection={rowSelection}
+                            dataSource={this.state.dataSource}
+                            components={components}
+                            columns={sbcolumn}
+                            bordered
+                            rowClassName="editable-row"
+                          />
+                        </div>
+                      </TabPane>
+                    </Tabs>
+                  </div>
                 </div>
-              </div>
-            </Content>
+              </Content>
+            </Layout>
           </Layout>
-        </Layout>
-      </div>
+        </div>
       </LocaleProvider>
     )
   }
