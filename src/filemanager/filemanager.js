@@ -54,9 +54,6 @@ class journal extends React.Component {
       dataIndex: 'name',
     },
     {
-      title: '模组开启前电压',
-      dataIndex: 'pckcount'
-    }, {
       title: '版本号',
       dataIndex: 'version',
     }, {
@@ -65,6 +62,13 @@ class journal extends React.Component {
     }, {
       title: '上传时间',
       dataIndex: 'gmtcreate',
+      // render: (text, record, index) => {
+      //   return (
+      //     <div>
+      //          {moment(new Date(parseInt(text))).format('YYYY-MM-DD hh:mm:ss')}
+      //     </div>
+      //   );
+      // },
     }, {
       title: '下载',
       dataIndex: 'version',
@@ -321,7 +325,7 @@ class journal extends React.Component {
 
   version = (e) => {
     this.setState({
-      version: e.target.value
+      version: e.target.value.replace(/^[0]\d*$/,'').replace(/[^\d\.]/g,'').replace(/^\./g,'').replace(/\.{2,}/g,'.').replace('.','$#$').replace(/\./g,'').replace('$#$','.')
     })
   }
 
@@ -505,7 +509,7 @@ class journal extends React.Component {
                   <span style={{ color: 'red', marginRight: '5px' }}>*</span>
                   <span>版本号：</span>
                 </div>
-                <Input placeholder="请输入版本号" style={{ width: '100%', marginBottom: '10px' }} id="version" autoComplete="off" onChange={this.version} />
+                <Input placeholder="请输入版本号" style={{ width: '100%', marginBottom: '10px' }} id="version" autoComplete="off" onChange={this.version}  value={this.state.version}/>
                 <div style={{ marginBottom: "10px" }}>
                   <span style={{ color: 'red', marginRight: '5px' }}>*</span>
                   <span>备注：</span>
