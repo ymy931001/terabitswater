@@ -26,6 +26,7 @@ class journal extends React.Component {
       area: '',
       provinceid: '',
       cityid: '',
+      typechange:'0',
       areaid: '',
     };
   }
@@ -116,6 +117,7 @@ class journal extends React.Component {
             chargephone,
             serverinf,
             chargeemail,
+            this.state.typechange,
           ]).then(res => {
             if (res.data && res.data.message === 'success') {
               message.success("设备添加成功");
@@ -136,7 +138,7 @@ class journal extends React.Component {
   componentWillMount = () => {
     document.title = "添加水务商";
 
-      var powerarr = [];
+    var powerarr = [];
     var powerarr1 = [];
     var powerarr2 = [];
     var powerarr3 = [];
@@ -147,7 +149,7 @@ class journal extends React.Component {
     var powerarr8 = [];
     var powerarr9 = [];
     for (var i = 0; i < this.state.powermenu.length; i++) {
-      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68 ) {
+      if (this.state.powermenu[i].id === 9 || this.state.powermenu[i].id === 10 || this.state.powermenu[i].id === 68) {
         powerarr.push(this.state.powermenu[i])
       } else if (this.state.powermenu[i].id === 11 || this.state.powermenu[i].id === 12 || this.state.powermenu[i].id === 13 || this.state.powermenu[i].id === 63) {
         powerarr1.push(this.state.powermenu[i])
@@ -192,6 +194,14 @@ class journal extends React.Component {
       }
     });
   }
+
+  typechange = (value) => {
+    console.log(value)
+    this.setState({
+      typechange:value
+    })
+  }
+
   render() {
     const powers = this.state.menudata.map((province, id) => <Menu.Item key={province.id}><Link to={province.code}>{province.name}</Link></Menu.Item>)
     const powers1 = this.state.data1.map((province, id) => <Menu.Item key={province.id}><Link to={province.code}>{province.name}</Link></Menu.Item>)
@@ -224,14 +234,14 @@ class journal extends React.Component {
                 <Menu.Item key="14" style={{ background: '#0099CB', color: 'white', fontSize: "18px", display: "block", width: "94%", borderRadius: '5px', marginLeft: "3%", marginRight: '3%' }}>
                   <Icon type="windows" />
                   <span>水表管理平台</span>
-                  </Menu.Item>
-                  <Menu.Item>
-                                        <Icon type="home" />
-                    <span>
-                      <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
-                    </span>
-                  </Menu.Item>
-                  <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
+                </Menu.Item>
+                <Menu.Item>
+                  <Icon type="home" />
+                  <span>
+                    <Link to="/homepage" style={{ color: 'white' }}>仪表盘</Link>
+                  </span>
+                </Menu.Item>
+                <SubMenu key="sub1" title={<span><Icon type="file-text" /><span>信息查询</span></span>}>
                   {powers}
                 </SubMenu>
                 <SubMenu key="sub2" title={<span><Icon type="desktop" /><span>设备管理</span></span>}>
@@ -330,6 +340,13 @@ class journal extends React.Component {
                         id="serverinf"
                         style={{ width: '60%' }}
                       />
+                    </div>
+                    <div className='addinput'>
+                      <span>推送方式：</span>
+                      <Select placeholder="请选择推送方式" style={{ width: '60%', }} onChange={this.typechange} value={this.state.typechange}>
+                        <Option value="0">定时推送</Option>
+                        <Option value="1">实时推送</Option>
+                      </Select>
                     </div>
                     <div className="btn">
                       <Button type="primary" style={{ marginRight: '20px' }} onClick={this.addwatermans}>提交</Button>

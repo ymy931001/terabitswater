@@ -221,6 +221,7 @@ export const addwaterMerchant = (params) => http.post(url + '/userManage/waterMe
 	phone: params[6],
 	server: params[7],
 	email: params[8],
+	type:params[9]
 });
 
 //4.1.2 新增区域主管 

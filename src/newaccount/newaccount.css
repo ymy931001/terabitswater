@@ -1,10 +1,10 @@
-#newaccountbody .ant-menu-root{
+#newaccounts .ant-menu-root{
     height: 950px;
 }
-#newaccountbody .Lowalar-left{
+#newaccounts .Lowalar-left{
     margin-top: 24px;
 }
-#newaccountbody .Administrator{
+#newaccounts .Administrator{
     float: right;
     height: 64px;
     line-height: 64px;
@@ -12,10 +12,10 @@
     display: flex;
     align-items: center;
 }
-#newaccountbody .Administrator i{
+#newaccounts .Administrator i{
     margin-right: 25px;
 }
-#newaccountbody .Administrator  span{
+#newaccounts .Administrator  span{
     margin-right: 10px;
     width: 20px;
     height: 20px;
@@ -23,7 +23,7 @@
     background: red;
     display: inline-block;
 }
-#newaccountbody .top{
+#newaccounts .top{
     height: 50px;
     background: #00284D;
     width: 100%;
@@ -34,27 +34,27 @@
     padding: 7px;
     font-size: 13px;
 }
-#newaccountbody .switch-btn{
+#newaccounts .switch-btn{
     float: left;
 }
-#newaccountbody .Lowalar-right{
+#newaccounts .Lowalar-right{
     float: left;
     margin-top: 24px;
     width: 77%;
 }
-#newaccountbody .Lowalar-rt{
+#newaccounts .Lowalar-rt{
     border-bottom: 1px solid #999;
     height: 50px;
     width: 100%;
     padding-left: 20px;
 }
-#newaccountbody .nav{
+#newaccounts .nav{
     height:30px;
     line-height: 30px;
     padding-left: 20px;
     background: white;
 }
-#newaccountbody .tit{
+#newaccounts .tit{
     font-size: 20px;
     background: white;
     height: 50px;
@@ -66,9 +66,9 @@
 
 
 
-#newaccountbody .explain{
+#newaccounts .explain{
     width: 80%;
-    height: 100px;
+    padding: 20px;
     border:1px solid rgba(24, 144, 255, 1);
     margin: 0 auto;
     border-radius: 5px;
@@ -77,35 +77,36 @@
     font-size: 12px;
     margin-bottom: 40px;
 }
-#newaccountbody .ant-cascader-picker-label{
+#newaccounts .ant-cascader-picker-label{
     width: 100% !important;
     text-align: left  !important;
 }
-#newaccountbody .explaintext{
+#newaccounts .explaintext{
     font-size: 12px;
     text-indent: 24px;
     color: black;
     line-height: 22px;
 }
-#newaccountbody .addinput{
+#newaccounts .addinput{
     width: 80%;
     margin:0 auto;
     margin-bottom: 20px;
 }
-#newaccountbody .addinput span{
+#newaccounts .addinput span{
     display: inline-block;
     width: 25%;
     text-align: right;
 }
-#newaccountbody .addinput select{
+#newaccounts .addinput select{
     width: 70%;
 }
-#newaccountbody .addtextarea{
+#newaccounts .addtextarea{
     width: 65%;
     margin:0 auto;
 }
-#newaccountbody .btn{
-    width: 65%;
+#newaccounts .btn{
+    width: 60%;
     margin:0 auto;
     margin-top: 20px;
+    text-align: right;
 }

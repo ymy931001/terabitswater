@@ -173,7 +173,7 @@ class journal extends React.Component {
     const account = this.state.accounttype.map((province) => <Option key={province.id}>{province.name}</Option>);
     // const account =[{ name: "管理员", id: 1 },{ name: "超级管理员", id: 2 },{ name: "用户", id: 3 },{ name: "程序员", id: 31 },{ name: "仓库管理员", id: 36 }].map(accounts => <Option key={accounts.id}>{accounts.name}</Option>);
     return (
-      <div id="newaccountbody" >
+      <div id="newaccounts" >
         <Layout>
           <Sider
             trigger={null}
