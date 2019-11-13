@@ -271,7 +271,7 @@ class journal extends React.Component {
       editable: true,
       render: (text, record) => {
         const editable = this.isEditing(record);
-        if (record.bx === "41" || record.bx === "C1") {
+        if (record.bx === "41" || record.bx === "C1" || record.bx === "11") {
           return (
             <div>
               {editable ? (
