@@ -275,7 +275,7 @@ class journal extends React.Component {
           return (
             <div>
               {editable ? (
-                <Input value={this.state.readingLatest} disabled={false} style={{ width: '80%' }} />
+                <Input value={this.state.readingLatest} disabled={false} style={{ width: '80%' }}  onChange={this.readingLatest}/>
               ) : (
                   <Input defaultValue={text} disabled={true} style={{ width: '80%' }} />
                 )
@@ -348,7 +348,11 @@ class journal extends React.Component {
   }
 
 
-
+  readingLatest=(e)=>{
+    this.setState({
+      readingLatest:e.target.value
+    })
+  }
 
   wirelessnumchange = (e) => {
     console.log(e.target.value)
