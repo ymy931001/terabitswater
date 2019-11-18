@@ -91,7 +91,9 @@ class logins extends Component {
             localStorage.setItem('currenttime', new Date().getTime())
             localStorage.setItem('name', res.data.data.name)
             localStorage.setItem('menu', JSON.stringify(res.data.data.menu))
-
+            setTimeout(() => {
+              window.location.href = res.data.data.menu[1].code;
+            }, 1000);
           }
         })
       }
