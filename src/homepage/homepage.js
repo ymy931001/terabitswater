@@ -378,7 +378,7 @@ class journal extends React.Component {
                     <p className="navtitle">在线设备数量</p>
                     <p className="number"><span style={{ color: 'red' }}>{this.state.online}</span>台</p>
                     <p className="beizhu">备注： 离线设备 <span style={{ color: 'red', fontSize: '18px', fontWeight: 'bold' }}>{this.state.offline}</span> 台
-                    今日在线率： <span style={{ color: 'blue', fontSize: '18px', fontWeight: 'bold' }} > {this.state.onLineRate}</span>
+                    &nbsp;&nbsp;当前实时在线率： <span style={{ color: 'blue', fontSize: '18px', fontWeight: 'bold' }} > {this.state.onLineRate}</span>
                     </p>
                   </div>
                 </Col>
