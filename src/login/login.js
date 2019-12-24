@@ -223,6 +223,9 @@ class logins extends Component {
               <div className="bombtn">
                 技术支持：&nbsp;&nbsp;杭州钛比科技有限公司 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话：&nbsp;&nbsp;0571-87755736
             </div>
+              <div className="bombtns">
+                备案号：浙ICP备16003817号-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站标识：3610782
+              </div>
             </div>
           </div>
         </div>
