@@ -231,7 +231,7 @@ class logins extends Component {
               </div>
               <div className="bombtns">
                 <img src={require('./bot.png')} alt="" style={{ width: '20px', marginRight: '10px' }} />
-                浙公网安备<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602007808" target="_blank" style={{ color: '#666666' }}>33010602009975号</a>
+                <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602007808" target="_blank" style={{ color: '#666666' }}>浙公网安备33010602009975号</a>
               </div>
             </div>
           </div>
