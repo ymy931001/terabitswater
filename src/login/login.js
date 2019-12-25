@@ -221,13 +221,17 @@ class logins extends Component {
                 </div>
               </div>
               <div className="bombtn">
-                技术支持：&nbsp;&nbsp;杭州钛比科技有限公司 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话：&nbsp;&nbsp;0571-87755736
-            </div>
+                技术支持：&nbsp;&nbsp;<a href="http://www.terabits.cn/" target="_blank" style={{ color: '#666666' }}>杭州钛比科技有限公司</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话：&nbsp;&nbsp;0571-87755736
+              </div>
               <div className="bombtns">
                 备案号：浙ICP备16003817号-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站标识：3610782
               </div>
               <div className="bombtns">
                 Operated by Hangzhou terabits technology co. LTD
+              </div>
+              <div className="bombtns">
+                <img src={require('./bot.png')} alt="" style={{ width: '20px', marginRight: '10px' }} />
+                浙公网安备<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602007808" target="_blank" style={{ color: '#666666' }}>33010602009975号</a>
               </div>
             </div>
           </div>
