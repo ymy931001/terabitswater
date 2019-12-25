@@ -226,6 +226,9 @@ class logins extends Component {
               <div className="bombtns">
                 备案号：浙ICP备16003817号-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站标识：3610782
               </div>
+              <div className="bombtns">
+                Operated by Hangzhou terabits technology co. LTD
+              </div>
             </div>
           </div>
         </div>

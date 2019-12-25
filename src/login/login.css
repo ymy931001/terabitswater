@@ -1,10 +1,10 @@
 
 
-  @font-face {
+  /* @font-face {
     font-family: 'myFamily'; 
     src: url('./Alibaba-PuHuiTi-Medium.otf');
   }
-  
+   */
 .cover{
   width: 100%;
   height: 100vh;
@@ -107,7 +107,7 @@
 
  #signbody .logo{
   font-size: 36px;
-  font-family: 'myFamily';
+  font-family:'Alibaba-PuHuiTi1ddfc6827a1d0b6';
   color:#0099cb;
   display: flex;
   justify-content: center;
